@@ -11,14 +11,14 @@ public class User {
     public String username;
     public String title;
     public String desc;
-    public float questFee = 3;
+    public double questFee = 3.0;
     public String photoUrl;
     public String email;
     public int followers;
     public int superiors;
     public int questions;
     public int answers;
-    public int totalRevenue;
+    public double totalRevenue;
 
     public User() {
     }

@@ -34,54 +34,37 @@ public final class QuestionUtil {
     public static void updateQuestion(String questionKey, Question question, DatabaseReference.CompletionListener listener) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/" + TableConstants.TABLE_QUESTIONS + "/" + questionKey, question);
-        childUpdates.put("/" + TableConstants.TABLE_USER_QUESTIONS + "/" + question.from + "/" + questionKey, question);
-        childUpdates.put("/" + TableConstants.TABLE_USER_ANSWERS + "/" + question.to + "/" +questionKey, question);
+        final Map<String, Object> questionMap = question.toMap();
+        childUpdates.put("/" + TableConstants.TABLE_QUESTIONS + "/" + questionKey, questionMap);
+        childUpdates.put("/" + TableConstants.TABLE_USER_QUESTIONS + "/" + question.from + "/" + questionKey, questionMap);
+        childUpdates.put("/" + TableConstants.TABLE_USER_ANSWERS + "/" + question.to + "/" + questionKey, questionMap);
         databaseReference.updateChildren(childUpdates, listener);
     }
 
     @NonNull
-    public static String getDisplayTime(long duration, int maxLevel) {
+    public static String getDisplayTime(long duration) {
         StringBuilder res = new StringBuilder();
-        int level = 0;
-        for (Map.Entry<String, Long> time : times.entrySet()){
+        for (Map.Entry<String, Long> time : times.entrySet()) {
             long timeDelta = duration / time.getValue();
-            if (timeDelta > 0){
+            if (timeDelta > 0) {
                 res.append(timeDelta)
                         .append(" ")
                         .append(time.getKey())
                         .append(timeDelta > 1 ? "s" : "")
-                        .append(", ");
-                duration -= time.getValue() * timeDelta;
-                level++;
-            }
-            if (level == maxLevel){
+                        .append(" ago");
                 break;
             }
         }
         if ("".equals(res.toString())) {
             return "0 seconds ago";
         } else {
-            res.setLength(res.length() - 2);
-            res.append(" ago");
             return res.toString();
         }
     }
 
     @NonNull
-    public static String getDisplayTime(long duration) {
-        return getDisplayTime(duration, times.size());
-    }
-
-    @NonNull
-    public static String getDisplayTime(Date start, Date end){
+    public static String getDisplayTime(Date start, Date end) {
         assert start.after(end);
         return getDisplayTime(end.getTime() - start.getTime());
-    }
-
-    @NonNull
-    public static String getDisplayTime(Date start, Date end, int level){
-        assert start.after(end);
-        return getDisplayTime(end.getTime() - start.getTime(), level);
     }
 }

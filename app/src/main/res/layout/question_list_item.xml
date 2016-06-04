@@ -10,39 +10,33 @@
         android:orientation="vertical"
         android:padding="11.5dp">
 
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="14dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/userAskedOrAnsweredTv"
+                style="@style/TextAppearanceMedium"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_alignParentEnd="true"
+                android:maxLines="1"
+                android:layout_marginEnd="73dp"
+                android:text="@string/question_answered" />
 
-                <TextView
-                    android:id="@+id/userNameAndTitleTv"
-                    style="@style/TextAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:id="@+id/userAskedOrAnsweredTv"
-                    style="@style/TextAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="27dp"
-                    android:text="@string/question_answered" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/userNameAndTitleTv"
+                style="@style/TextAppearanceMedium"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4" />
-        </LinearLayout>
+                android:layout_toStartOf="@id/userAskedOrAnsweredTv"
+                android:layout_alignParentStart="true"
+                android:maxLines="1" />
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/questionTv"

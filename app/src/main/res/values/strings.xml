@@ -22,8 +22,8 @@
     <string name="my_questions">My Questions</string>
     <string name="my_answers">My Answers</string>
     <string name="my_secret_listening">My Listening</string>
-    <string name="my_quest_fee_desc">Asking me question need to pay $%1$d</string>
-    <string name="my_total_revenue">Total revenue $%1$d</string>
+    <string name="my_quest_fee_desc">Asking me question need to pay $%1$.2f</string>
+    <string name="my_total_revenue">Total revenue $%1$.2f</string>
 
     <!-- Question detail -->
     <string name="question_asked">asked</string>

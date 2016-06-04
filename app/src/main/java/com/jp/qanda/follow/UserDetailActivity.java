@@ -112,6 +112,7 @@ public class UserDetailActivity extends AppCompatActivity {
         userDescTv.setText(user.desc);
         userFollowersTv.setText(getString(R.string.user_followers_count, user.followers));
         questFeeTv.setText(getString(R.string.user_quest_fee, user.questFee));
+        questFeeTv.setTag(user.questFee);
     }
 
     @OnClick(R.id.userFollowingAction)
@@ -125,12 +126,13 @@ public class UserDetailActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         final String questionKey = databaseReference.child(TableConstants.TABLE_QUESTIONS).push().getKey();
         final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Question question = new Question(questionEt.getText().toString().trim(), Float.valueOf(questFeeTv.getText().toString()), currentUserId, getIntent().getStringExtra(U_ID));
+        Question question = new Question(questionEt.getText().toString().trim(), (Double) questFeeTv.getTag(), currentUserId, getIntent().getStringExtra(U_ID));
         QuestionUtil.updateQuestion(questionKey, question, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 Snackbar.make(rootView, databaseError != null && databaseError.getMessage() != null ? databaseError.getMessage() : "Question was sent out.", Snackbar.LENGTH_LONG).show();
                 view.setEnabled(true);
+                questionEt.setText("");
             }
         });
     }
