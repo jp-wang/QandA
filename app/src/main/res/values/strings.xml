@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">QandA</string>
+    <string name="action_settings">Settings</string>
+    <string name="q_a"><![CDATA[Q&A]]></string>
+
+    <!-- splash -->
+    <string name="sign_in_failed">Sign in Failed!</string>
+    <string name="try_again">Try again</string>
+    
+    <!-- user list -->
+    <string name="follow">Follow</string>
+    <string name="user_answer_desc">%1$d answers&#160;&#160;</string>
+    <string name="user_followers_count">%1$d people followed</string>
+    <string name="user_secret_listening_count">%1$d people listened</string>
+
+    <!-- user detail -->
+    <string name="ask_hint">Ask question. If there is no response beyond 48 hrs, you will get full refund!</string>
+    <string name="user_detail_title">Ask %1$s</string>
+    <string name="user_quest_fee">$%1$s</string>
+
+    <!-- Me profile -->
+    <string name="my_questions">My Questions</string>
+    <string name="my_answers">My Answers</string>
+    <string name="my_secret_listening">My Listening</string>
+    <string name="my_quest_fee_desc">Asking me question need to pay $%1$d</string>
+    <string name="my_total_revenue">Total revenue $%1$d</string>
+
+    <!-- Question detail -->
+    <string name="question_asked">asked</string>
+    <string name="question_answered">answered</string>
+</resources>

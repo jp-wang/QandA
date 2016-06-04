@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="@dimen/avatarWidth"
+                android:layout_height="@dimen/avatarHeight"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/userNameTv"
+                style="@style/TextAppearanceNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/userTitleTv"
+                style="@style/TextAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/userDescTv"
+                style="@style/TextAppearanceNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/userFollowingAction"
+                    style="@style/TextAppearanceNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/splash_icon_background"
+                    android:padding="4dp"
+                    android:text="@string/follow"
+                    android:textColor="@drawable/follow_action_font_color" />
+
+                <TextView
+                    android:id="@+id/userFollowerTv"
+                    style="@style/TextAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5sp"
+                    android:layout_toStartOf="@id/userFollowingAction" />
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/questionEt"
+                style="@style/TextAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="126dp"
+                android:background="@drawable/follower_ask_edit_text_background"
+                android:gravity="fill"
+                android:hint="@string/ask_hint"
+                android:textColorHint="#b9b9b9" />
+
+            <TextView
+                android:id="@+id/questFeeTv"
+                style="@style/TextAppearanceNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#f85f48" />
+
+            <TextView
+                android:id="@+id/questSubmit"
+                style="@style/TextAppearanceNormal"
+                android:layout_width="125dp"
+                android:layout_height="63dp"
+                android:layout_gravity="center"
+                android:background="@drawable/splash_icon_background"
+                android:gravity="center"
+                android:text="Done"
+                android:textColor="@drawable/follow_action_font_color" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
