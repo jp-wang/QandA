@@ -2,18 +2,26 @@ package com.jp.qanda.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.dashboard.DashboardActivity;
+import com.jp.qanda.util.AudioHandleUtil;
+import com.jp.qanda.vo.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,18 +46,45 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        AudioHandleUtil.init(20, this.getApplicationContext());
+
         Observable.just(FirebaseAuth.getInstance().getCurrentUser())
-                .subscribeOn(Schedulers.computation())
+                .observeOn(Schedulers.computation())
                 .subscribe(new Action1<FirebaseUser>() {
                     @Override
-                    public void call(FirebaseUser firebaseUser) {
+                    public void call(final FirebaseUser firebaseUser) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         if (firebaseUser == null) {
                             startAuthUI();
                         } else {
-                            startActivity(DashboardActivity.createIntent(SplashActivity.this));
+                            FirebaseDatabase.getInstance().getReference(TableConstants.TABLE_USERS)
+                                    .child(firebaseUser.getUid())
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            User user = dataSnapshot.getValue(User.class);
+                                            if (user == null) {
+                                                createOrUpdateUserInfo(firebaseUser);
+                                            } else {
+                                                startActivity(DashboardActivity.createIntent(SplashActivity.this));
+                                                SplashActivity.this.finish();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                            showErrorHandling();
+                                        }
+                                    });
                         }
                     }
                 });
+
     }
 
     private void startAuthUI() {
@@ -77,19 +112,13 @@ public class SplashActivity extends AppCompatActivity {
     private void handleSignInResponse(int resultCode, Intent data) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (resultCode == RESULT_OK && user != null) {
-            HashMap<String, Object> updatedUserFields = new HashMap<>();
-            updatedUserFields.put("username", user.getDisplayName());
-            updatedUserFields.put("email", user.getEmail());
-            updatedUserFields.put("photoUrl", user.getPhotoUrl());
-
-            FirebaseDatabase.getInstance().getReference(TableConstants.TABLE_USERS)
-                    .child(user.getUid())
-                    .updateChildren(updatedUserFields);
-
-            startActivity(DashboardActivity.createIntent(this));
-            this.finish();
+            createOrUpdateUserInfo(user);
             return;
         }
+        showErrorHandling();
+    }
+
+    private void showErrorHandling() {
         Snackbar.make(rootView, R.string.sign_in_failed, Snackbar.LENGTH_LONG)
                 .setAction(R.string.try_again, new View.OnClickListener() {
                     @Override
@@ -97,6 +126,30 @@ public class SplashActivity extends AppCompatActivity {
                         startAuthUI();
                     }
                 }).show();
+    }
+
+    private void createOrUpdateUserInfo(FirebaseUser user) {
+        HashMap<String, Object> updatedUserFields = new HashMap<>();
+        updatedUserFields.put("username", user.getDisplayName());
+        updatedUserFields.put("email", user.getEmail());
+        updatedUserFields.put("photoUrl", user.getPhotoUrl());
+
+        FirebaseDatabase.getInstance().getReference(TableConstants.TABLE_USERS)
+                .child(user.getUid())
+                .updateChildren(updatedUserFields)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        startActivity(DashboardActivity.createIntent(SplashActivity.this));
+                        SplashActivity.this.finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showErrorHandling();
+                    }
+                });
     }
 
     private boolean isFacebookConfigured() {

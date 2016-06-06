@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColorSecondary"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/title_bar"
+        android:background="@color/backgroundColorPrimary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundColorPrimary"
+        android:orientation="vertical"
+        android:padding="@dimen/titleBarPadding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/titleBarPadding"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="@dimen/avatarWidth"
+                android:layout_height="@dimen/avatarHeight"
+                android:src="@drawable/ic_account_circle_black_36dp" />
+
+            <TextView
+                android:id="@+id/userNameTv"
+                style="@style/TextAppearanceNormal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/user_avatar_name_margin"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/questFeeTv"
+                style="@style/TextAppearanceNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorOrange" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/questionTv"
+            style="@style/TextAppearanceNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/titleBarPadding" />
+
+        <LinearLayout
+            android:id="@+id/answerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/titleBarPadding"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/answerUserAvatar"
+                android:layout_width="@dimen/avatarWidth"
+                android:layout_height="@dimen/avatarHeight"
+                android:src="@drawable/ic_account_circle_black_36dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/answerContent"
+                    style="@style/TextAppearanceMedium"
+                    android:layout_width="179dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/answer_audio_bubble"
+                    android:gravity="center"
+                    android:text="@string/question_answer_one_dollar_listen"
+                    android:textColor="@android:color/white" />
+
+                <com.jp.recorderandplayer.playerview.PlayerView
+                    android:id="@+id/answerPlayerView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="3dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/thumbDownIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_thumb_down" />
+        </LinearLayout>
+
+        <com.jp.recorderandplayer.recorderview.RecorderView
+            android:id="@+id/answerRecorderView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/titleBarPadding"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/avatarWidth"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/questionTimeTv"
+                style="@style/TextAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/answerListenersTv"
+                style="@style/TextAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundColorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/titleBarPadding">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/answerUserAvatar2"
+            android:layout_width="@dimen/avatarWidth"
+            android:layout_height="@dimen/avatarHeight"
+            android:src="@drawable/ic_account_circle_black_36dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/user_avatar_name_margin"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/answerUserNameTv"
+                    style="@style/TextAppearanceNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/answerUserFollowersTv"
+                    style="@style/TextAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/answerUserTitleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

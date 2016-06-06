@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
+import com.jp.qanda.util.FollowUtil;
+import com.jp.qanda.util.QuestionUtil;
 import com.jp.qanda.vo.Question;
 import com.jp.qanda.vo.User;
 import com.nostra13.universalimageloader.core.ImageLoader;

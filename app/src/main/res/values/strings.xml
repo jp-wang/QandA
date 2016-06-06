@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QandA</string>
+    <string name="app_name">QA</string>
     <string name="action_settings">Settings</string>
     <string name="q_a"><![CDATA[Q&A]]></string>
 
@@ -28,4 +28,7 @@
     <!-- Question detail -->
     <string name="question_asked">asked</string>
     <string name="question_answered">answered</string>
+    <string name="question_answer_one_dollar_listen">$1 to listen</string>
+    <string name="question_title">Question</string>
+    <string name="question_permission_audio_rationale">Audio permission is needed to answer the question.</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.jp.qanda.follow;
+package com.jp.qanda.util;
 
 import android.view.View;
 

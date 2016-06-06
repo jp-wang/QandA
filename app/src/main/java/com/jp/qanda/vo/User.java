@@ -11,7 +11,7 @@ public class User {
     public String username;
     public String title;
     public String desc;
-    public double questFee = 3.0;
+    public double questFee = 0.0;
     public String photoUrl;
     public String email;
     public int followers;

@@ -20,8 +20,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
-import com.jp.qanda.follow.QuestionUtil;
-import com.jp.qanda.question.QuestionDetailActivity;
+import com.jp.qanda.question.QuestionAnswerDetailActivity;
+import com.jp.qanda.util.QuestionUtil;
 import com.jp.qanda.vo.Question;
 import com.jp.qanda.vo.User;
 
@@ -61,7 +61,7 @@ public abstract class QuestionListFragment extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(QuestionDetailActivity.createIntent(getActivity(), questionKey));
+                        startActivity(QuestionAnswerDetailActivity.createIntent(getActivity(), questionKey));
                     }
                 });
                 viewHolder.bindData(model);

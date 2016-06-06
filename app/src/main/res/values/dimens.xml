@@ -5,6 +5,10 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <!-- User avatar -->
-    <dimen name="avatarWidth">67dp</dimen>
-    <dimen name="avatarHeight">67dp</dimen>
+    <dimen name="avatarWidth">50dp</dimen>
+    <dimen name="avatarHeight">50dp</dimen>
+    <dimen name="user_avatar_name_margin">11.5dp</dimen>
+
+    <!-- title bar -->
+    <dimen name="titleBarPadding">15dp</dimen>
 </resources>
