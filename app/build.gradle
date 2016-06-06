@@ -29,6 +29,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:9.0.1'
     compile 'com.google.firebase:firebase-storage:9.0.1'
     compile 'com.google.firebase:firebase-crash:9.0.1'
+    compile 'com.google.firebase:firebase-config:9.0.1'
     // Single target that includes all FirebaseUI libraries
     compile 'com.firebaseui:firebase-ui:0.4.0'
     // FirebaseUI Database only
@@ -54,13 +55,8 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
+    compile 'com.jp.ui:RecorderAndPlayerWidget:1.0.4'
+
 }
 
-repositories {
-    maven { url "https://dl.bintray.com/neiyo1987/maven" }
-}
-
-dependencies {
-    compile 'com.jp.ui:RecorderAndPlayerWidget:1.0.3'
-}
 apply plugin: 'com.google.gms.google-services'

@@ -16,6 +16,8 @@ public class Answer {
     public int rating;
     public int secretListeners;
     public long timestamp = System.currentTimeMillis();
+    public long contentLength;
+    public int contentType = 0; // 0 - Audio, 1 - Text, 2 - other
 
     public Answer() {
 
@@ -32,6 +34,8 @@ public class Answer {
         map.put("rating", rating);
         map.put("secretListeners", secretListeners);
         map.put("timestamp", timestamp);
+        map.put("contentLength", contentLength);
+        map.put("contentType", contentType);
         return map;
     }
 }

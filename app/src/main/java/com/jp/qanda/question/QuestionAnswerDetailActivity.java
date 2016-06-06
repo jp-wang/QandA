@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.jp.qanda.ConfigConstants;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.util.AudioHandleUtil;
@@ -77,6 +79,9 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
 
     @BindView(R.id.answerContainer)
     View answerContainer;
+
+    @BindView(R.id.answerContentLength)
+    TextView answerContentLength;
 
     @BindView(R.id.answerUserAvatar)
     ImageView answerUserAvatar;
@@ -150,7 +155,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
     }
 
     private void updateBasicUI(Question question) {
-        updateQuestionFromUserInfo(question);
+        updateQuestionUserInfo(question);
         updateAnswerUserInfo(question);
         updateQuestionDetail(question);
         updateAnswerDetail(question);
@@ -174,6 +179,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
 
         questionTimeTv.setText(QuestionUtil.getDisplayTime(System.currentTimeMillis() - answer.timestamp));
         answerListenersTv.setText(getString(R.string.user_secret_listening_count, answer.secretListeners));
+        answerContentLength.setText(String.valueOf((int) Math.ceil(answer.contentLength / 1000L)));
     }
 
     private void updateQuestionDetail(Question question) {
@@ -185,7 +191,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
         answerContainer.setVisibility(View.GONE);
     }
 
-    private void updateQuestionFromUserInfo(Question question) {
+    private void updateQuestionUserInfo(Question question) {
         database.child(TableConstants.TABLE_USERS).child(question.from).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -276,6 +282,8 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
         }
     }
 
+    private long recordStartTime = 0;
+
     @NeedsPermission(Manifest.permission.RECORD_AUDIO)
     void recordAnswer() {
         mediaRecorder = new MediaRecorder();
@@ -292,7 +300,8 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
         try {
             mediaRecorder.prepare();
             mediaRecorder.start();
-            answerRecorderView.startAnimation(this);
+            recordStartTime = System.currentTimeMillis();
+            answerRecorderView.startAnimation((int) FirebaseRemoteConfig.getInstance().getLong(ConfigConstants.CONFIG_AUDIO_MAX_TIME), this);
         } catch (IOException e) {
             e.printStackTrace();
             mediaRecorder = null;
@@ -336,7 +345,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
                     });
                     mediaPlayer.prepare();
                     mediaPlayer.start();
-                    answerPlayerView.startAnimation(10, QuestionAnswerDetailActivity.this);
+                    answerPlayerView.startAnimation(Integer.parseInt(answerContentLength.getText().toString()), QuestionAnswerDetailActivity.this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -352,6 +361,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
         mediaRecorder.stop();
         mediaRecorder.release();
         mediaRecorder = null;
+        final long recordTotalTime = System.currentTimeMillis() - recordStartTime;
         try {
             AudioHandleUtil.saveAnswerAudio(getIntent().getStringExtra(Q_KEY), new OnSuccessListener<Uri>() {
                 @Override
@@ -362,6 +372,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Question question = dataSnapshot.getValue(Question.class);
                                 question.answer = new Answer(file.toString());
+                                question.answer.contentLength = recordTotalTime;
                                 updateBasicUI(question);
                                 QuestionUtil.updateQuestion(getIntent().getStringExtra(Q_KEY), question, new DatabaseReference.CompletionListener() {
                                     @Override
