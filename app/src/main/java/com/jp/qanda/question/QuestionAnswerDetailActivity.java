@@ -113,6 +113,9 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
     @BindView(R.id.title)
     TextView titleTv;
 
+    @BindView(R.id.answerContent)
+    TextView answerContent;
+
     private DatabaseReference database;
 
     private MediaRecorder mediaRecorder;
@@ -126,6 +129,8 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
         ButterKnife.bind(this);
 
         titleTv.setText(R.string.question_title);
+        answerContent.setText(getString(R.string.question_answer_one_dollar_listen,
+                FirebaseRemoteConfig.getInstance().getDouble(ConfigConstants.CONFIG_SECRET_LISTEN_FEE)));
 
         database = FirebaseDatabase.getInstance().getReference();
     }

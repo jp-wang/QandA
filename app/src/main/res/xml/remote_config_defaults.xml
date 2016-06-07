@@ -4,4 +4,8 @@
         <key>audio_allowed_max_time_in_seconds</key>
         <value>10</value>
     </entry>
+    <entry>
+        <key>audio_secret_listen_fee</key>
+        <value>1</value>
+    </entry>
 </defaultsMap>

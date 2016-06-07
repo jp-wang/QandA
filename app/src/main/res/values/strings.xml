@@ -28,7 +28,7 @@
     <!-- QuestionAnswer detail -->
     <string name="question_asked">asked</string>
     <string name="question_answered">answered</string>
-    <string name="question_answer_one_dollar_listen">$1 to listen</string>
+    <string name="question_answer_one_dollar_listen">$%1$.2f to listen</string>
     <string name="question_title">Question</string>
     <string name="question_permission_audio_rationale">Audio permission is needed to answer the question.</string>
     <string name="question_answer_content_length_unit">"</string>

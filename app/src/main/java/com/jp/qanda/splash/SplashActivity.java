@@ -69,6 +69,7 @@ public class SplashActivity extends BaseActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                        init();
                         if (firebaseUser == null) {
                             startAuthUI();
                         } else {
@@ -95,6 +96,10 @@ public class SplashActivity extends BaseActivity {
                     }
                 });
 
+
+    }
+
+    private void init() {
         FirebaseRemoteConfigSettings settings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
