@@ -395,6 +395,25 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
                                         // TODO: 6/5/16 set the retry button invisible
                                     }
                                 });
+                                database.child(TableConstants.TABLE_USERS)
+                                        .child(question.to)
+                                        .runTransaction(new Transaction.Handler() {
+                                            @Override
+                                            public Transaction.Result doTransaction(MutableData mutableData) {
+                                                User user = mutableData.getValue(User.class);
+                                                if (user != null) {
+                                                    user.answers += 1;
+                                                    mutableData.setValue(user);
+                                                }
+
+                                                return Transaction.success(mutableData);
+                                            }
+
+                                            @Override
+                                            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+                                            }
+                                        });
                             }
 
                             @Override

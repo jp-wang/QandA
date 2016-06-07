@@ -135,7 +135,7 @@ public abstract class QuestionListFragment extends Fragment {
 
     protected abstract Query getQuery(DatabaseReference databaseReference);
 
-    static class QuestionViewHolder extends RecyclerView.ViewHolder {
+    public static class QuestionViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.userNameAndTitleTv)
         TextView userNameAndTitleTv;

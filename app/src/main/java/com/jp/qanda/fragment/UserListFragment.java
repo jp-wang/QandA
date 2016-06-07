@@ -87,7 +87,7 @@ public class UserListFragment extends Fragment {
         }
     }
 
-    static class UserViewHolder extends RecyclerView.ViewHolder {
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.userAvatar)
         ImageView userAvatar;
