@@ -1,11 +1,11 @@
 package com.jp.qanda.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
@@ -21,12 +21,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.jp.qanda.BaseActivity;
 import com.jp.qanda.BuildConfig;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.dashboard.DashboardActivity;
 import com.jp.qanda.util.AudioHandleUtil;
 import com.jp.qanda.vo.User;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +45,7 @@ import rx.schedulers.Schedulers;
  * @author jpwang
  * @since 6/1/16
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     private static final String UNCHANGED_CONFIG_VALUE = "CHANGE-ME";
     private static final int RC_SIGN_IN = 1000;
 
@@ -101,6 +106,23 @@ public class SplashActivity extends AppCompatActivity {
                 remoteConfig.activateFetched();
             }
         });
+
+        initImageLoader(this.getApplicationContext());
+    }
+
+    public static void initImageLoader(Context context) {
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        if (BuildConfig.DEBUG) {
+            config.writeDebugLogs(); // Remove for release app
+        }
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
     }
 
     private void startAuthUI() {
@@ -148,7 +170,7 @@ public class SplashActivity extends AppCompatActivity {
         HashMap<String, Object> updatedUserFields = new HashMap<>();
         updatedUserFields.put("username", user.getDisplayName());
         updatedUserFields.put("email", user.getEmail());
-        updatedUserFields.put("photoUrl", user.getPhotoUrl());
+        updatedUserFields.put("photoUrl", user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : "");
 
         FirebaseDatabase.getInstance().getReference(TableConstants.TABLE_USERS)
                 .child(user.getUid())

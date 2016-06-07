@@ -8,13 +8,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
+import com.jp.qanda.BaseActivity;
 import com.jp.qanda.R;
 import com.jp.qanda.fragment.HotQuestionsFragment;
-import com.jp.qanda.fragment.UserListFragment;
 import com.jp.qanda.fragment.MeProfileFragment;
-import com.jp.qanda.fragment.QuestionListFragment;
+import com.jp.qanda.fragment.UserListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +22,7 @@ import butterknife.ButterKnife;
  * @author jpwang
  * @since 6/2/16
  */
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends BaseActivity {
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;

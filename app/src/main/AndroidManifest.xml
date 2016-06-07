@@ -25,6 +25,7 @@
         <activity android:name=".dashboard.DashboardActivity" />
         <activity android:name=".follow.UserDetailActivity" />
         <activity android:name=".question.QuestionAnswerDetailActivity" />
+        <activity android:name=".fragment.QuestionListFragment$FragmentStubActivity" />
     </application>
 
 </manifest>

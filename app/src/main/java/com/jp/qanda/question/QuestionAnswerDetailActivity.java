@@ -133,6 +133,16 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
     @Override
     protected void onStop() {
         super.onStop();
+        if (mediaRecorder != null) {
+            mediaRecorder.release();
+            mediaRecorder.stop();
+            mediaRecorder = null;
+        }
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer.stop();
+            mediaPlayer = null;
+        }
     }
 
     @Override
@@ -253,7 +263,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
 
     private long lastPlayingAnswerTime = 0;
 
-    @OnClick(R.id.answerContent)
+    @OnClick({R.id.answerContent, R.id.answerPlayerView})
     void playOrStopQuestionContent(View v) {
         if (System.currentTimeMillis() - lastPlayingAnswerTime < 1000) {
             return;

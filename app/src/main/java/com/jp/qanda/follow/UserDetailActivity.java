@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jp.qanda.BaseActivity;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.util.FollowUtil;
@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * @author jpwang
  * @since 6/2/16
  */
-public class UserDetailActivity extends AppCompatActivity {
+public class UserDetailActivity extends BaseActivity {
     private final static String U_ID = "uid";
 
     public static Intent createIntent(Context context, String uid) {
@@ -70,7 +70,7 @@ public class UserDetailActivity extends AppCompatActivity {
     @BindView(android.R.id.content)
     View rootView;
 
-    @BindView(R.id.action)
+    @BindView(R.id.share)
     View shareAction;
 
     private DatabaseReference userTable;
@@ -137,10 +137,5 @@ public class UserDetailActivity extends AppCompatActivity {
                 questionEt.setText("");
             }
         });
-    }
-
-    @OnClick(R.id.action)
-    void doShare(View view) {
-
     }
 }

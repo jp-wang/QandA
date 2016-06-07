@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColorSecondary"
     android:orientation="vertical">
-
-    <include layout="@layout/title_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,16 +17,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/backgroundColorPrimary"
                 android:orientation="vertical"
                 android:paddingEnd="20dp"
                 android:paddingStart="20dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userAvatar"
-                    android:src="@drawable/ic_account_circle_black_36dp"
                     android:layout_width="@dimen/avatarWidth"
                     android:layout_height="@dimen/avatarHeight"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_account_circle_black_36dp" />
 
                 <TextView
                     android:id="@+id/userNameTv"
@@ -41,7 +41,7 @@
                     style="@style/TextAppearanceMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal" />
 
                 <TextView
                     android:id="@+id/questFeeTv"
@@ -70,13 +70,13 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="12dp"
-                android:background="@color/backgroundColorSecondary" />
+                android:layout_height="12dp" />
 
             <LinearLayout
                 android:id="@+id/myQuestions"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/backgroundColorPrimary"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="20dp">
@@ -84,7 +84,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="14dp" />
+                    android:layout_marginEnd="14dp"
+                    android:src="@drawable/ic_question" />
 
                 <TextView
                     style="@style/TextAppearanceNormal"
@@ -93,10 +94,16 @@
                     android:text="@string/my_questions" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/backgroundColorSecondary" />
+
             <LinearLayout
                 android:id="@+id/myAnswers"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/backgroundColorPrimary"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="20dp">
@@ -104,7 +111,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="14dp" />
+                    android:layout_marginEnd="14dp"
+                    android:src="@drawable/ic_my_answer" />
 
                 <TextView
                     style="@style/TextAppearanceNormal"
@@ -113,10 +121,16 @@
                     android:text="@string/my_answers" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/backgroundColorSecondary" />
+
             <LinearLayout
                 android:id="@+id/myListening"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/backgroundColorPrimary"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="20dp">
@@ -124,7 +138,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="14dp" />
+                    android:layout_marginEnd="14dp"
+                    android:src="@drawable/ic_star" />
 
                 <TextView
                     style="@style/TextAppearanceNormal"
@@ -132,6 +147,21 @@
                     android:layout_height="wrap_content"
                     android:text="@string/my_secret_listening" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <TextView
+                android:id="@+id/logout"
+                style="@style/TextAppearanceNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/backgroundColorPrimary"
+                android:gravity="center"
+                android:padding="@dimen/titleBarPadding"
+                android:text="Logout"
+                android:textColor="@color/textColorOrange" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

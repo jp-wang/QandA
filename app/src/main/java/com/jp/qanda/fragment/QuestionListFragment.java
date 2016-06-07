@@ -1,7 +1,10 @@
 package com.jp.qanda.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +21,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.jp.qanda.BaseActivity;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.question.QuestionAnswerDetailActivity;
 import com.jp.qanda.util.QuestionUtil;
 import com.jp.qanda.vo.Question;
 import com.jp.qanda.vo.User;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +83,53 @@ public abstract class QuestionListFragment extends Fragment {
         super.onDestroy();
         if (adapter != null) {
             adapter.cleanup();
+        }
+    }
+
+    private static Map<String, Fragment> fragmentMap = new HashMap<>();
+
+    public void launchInActivity(Context context, String title) {
+        fragmentMap.put(this.toString(), this);
+        context.startActivity(FragmentStubActivity.createIntent(context, this.toString(), title));
+    }
+
+    public void launchInActivity(Context context, @StringRes int title) {
+        launchInActivity(context, context.getString(title));
+    }
+
+    public static class FragmentStubActivity extends BaseActivity {
+        private final static String FRAGMENT_KEY_ID = "f_id";
+        private final static String KEY_TITLE = "k_title";
+
+        static Intent createIntent(Context context, String fragmentId, String title) {
+            Intent intent = new Intent();
+            intent.setClass(context, FragmentStubActivity.class);
+            intent.putExtra(FRAGMENT_KEY_ID, fragmentId);
+            intent.putExtra(KEY_TITLE, title);
+            return intent;
+        }
+
+        @BindView(R.id.title)
+        TextView title;
+
+        @Override
+        protected void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_fragment_stub);
+
+            ButterKnife.bind(this);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, fragmentMap.get(getIntent().getStringExtra(FRAGMENT_KEY_ID)))
+                    .commit();
+
+            title.setText(getIntent().getStringExtra(KEY_TITLE));
+        }
+
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+            fragmentMap.remove(getIntent().getStringExtra(FRAGMENT_KEY_ID));
         }
     }
 

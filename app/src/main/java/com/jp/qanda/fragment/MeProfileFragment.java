@@ -1,5 +1,6 @@
 package com.jp.qanda.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
+import com.jp.qanda.splash.SplashActivity;
 import com.jp.qanda.vo.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -47,12 +49,6 @@ public class MeProfileFragment extends Fragment {
     @BindView(R.id.userTotalRevenueTv)
     TextView totalRevenueTv;
 
-    @BindView(R.id.action)
-    View shareAction;
-
-    @BindView(R.id.back)
-    View back;
-
     private DatabaseReference databaseReference;
 
     private DatabaseReference meReference;
@@ -70,8 +66,6 @@ public class MeProfileFragment extends Fragment {
         final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         meReference = databaseReference.child(TableConstants.TABLE_USERS).child(currentUserId);
 
-        back.setVisibility(View.GONE);
-        shareAction.setVisibility(View.VISIBLE);
         return rootView;
     }
 
@@ -116,16 +110,23 @@ public class MeProfileFragment extends Fragment {
 
     @OnClick(R.id.myQuestions)
     void gotoMyQuestions(View view) {
-
+        new MyQuestionsFragment().launchInActivity(this.getContext(), "My Questions");
     }
 
     @OnClick(R.id.myAnswers)
     void gotoMyAnswers(View view) {
-
+        new MyAnswersFragment().launchInActivity(this.getContext(), "My Answers");
     }
 
     @OnClick(R.id.myListening)
     void gotoMyListening(View view) {
 
+    }
+
+    @OnClick(R.id.logout)
+    void doLogout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this.getContext(), SplashActivity.class));
+        this.getActivity().finish();
     }
 }
