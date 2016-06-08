@@ -106,7 +106,7 @@ public class UserDetailActivity extends BaseActivity {
         title.setText(getString(R.string.user_detail_title, user.username));
 
         userAvatar.setImageResource(R.drawable.ic_account_circle_black_36dp);
-        if (user.photoUrl != null) {
+        if (user.photoUrl != null && !user.photoUrl.isEmpty()) {
             ImageLoader.getInstance().displayImage(user.photoUrl, userAvatar);
         }
         userNameTv.setText(user.username);

@@ -1,6 +1,5 @@
 package com.jp.qanda;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,10 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.android.gms.appinvite.AppInviteInvitation;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,25 +26,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initImageLoader(this.getApplicationContext());
-    }
-
-    private void initImageLoader(Context context) {
-        if (ImageLoader.getInstance().isInited()) {
-            return;
-        }
-        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
-        config.threadPriority(Thread.NORM_PRIORITY - 2);
-        config.denyCacheImageMultipleSizesInMemory();
-        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
-        config.tasksProcessingOrder(QueueProcessingType.LIFO);
-        if (BuildConfig.DEBUG) {
-            config.writeDebugLogs(); // Remove for release app
-        }
-
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config.build());
     }
 
     @OnClick(R.id.back)

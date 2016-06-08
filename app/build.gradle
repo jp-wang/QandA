@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.jp.qanda"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -38,11 +38,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
 
-    compile 'com.google.firebase:firebase-core:9.0.1'
-    compile 'com.google.firebase:firebase-storage:9.0.1'
-    compile 'com.google.firebase:firebase-crash:9.0.1'
-    compile 'com.google.firebase:firebase-config:9.0.1'
-    compile 'com.google.firebase:firebase-invites:9.0.1'
+    compile 'com.google.firebase:firebase-core:9.0.2'
+    compile 'com.google.firebase:firebase-storage:9.0.2'
+    compile 'com.google.firebase:firebase-crash:9.0.2'
+    compile 'com.google.firebase:firebase-config:9.0.2'
+    compile 'com.google.firebase:firebase-invites:9.0.2'
+    compile 'com.google.firebase:firebase-messaging:9.0.2'
     // Single target that includes all FirebaseUI libraries
     compile 'com.firebaseui:firebase-ui:0.4.0'
     // FirebaseUI Database only
@@ -68,7 +69,7 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
-    compile 'com.jp.ui:RecorderAndPlayerWidget:1.0.4'
+    compile 'com.jp.ui:RecorderAndPlayerWidget:1.0.5'
 
 }
 

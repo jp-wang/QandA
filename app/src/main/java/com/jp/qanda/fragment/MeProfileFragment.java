@@ -70,7 +70,7 @@ public class MeProfileFragment extends Fragment {
     }
 
     private void updateBasicUI(User user) {
-        if (user.photoUrl != null) {
+        if (user.photoUrl != null && !user.photoUrl.isEmpty()) {
             ImageLoader.getInstance().displayImage(user.photoUrl, userAvatar);
         }
         userNameTv.setText(user.username);

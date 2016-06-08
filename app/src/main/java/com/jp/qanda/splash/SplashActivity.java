@@ -25,7 +25,6 @@ import com.jp.qanda.BuildConfig;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.dashboard.DashboardActivity;
-import com.jp.qanda.util.AudioHandleUtil;
 import com.jp.qanda.vo.User;
 
 import java.util.ArrayList;
@@ -52,8 +51,6 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        AudioHandleUtil.init(20, this.getApplicationContext());
-
         Observable.just(FirebaseAuth.getInstance().getCurrentUser())
                 .observeOn(Schedulers.computation())
                 .subscribe(new Action1<FirebaseUser>() {
@@ -64,7 +61,6 @@ public class SplashActivity extends BaseActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        init();
                         if (firebaseUser == null) {
                             startAuthUI();
                         } else {
@@ -91,16 +87,16 @@ public class SplashActivity extends BaseActivity {
                     }
                 });
 
-        init();
-
+        initFirebaseRemoteConfig();
     }
 
-    private void init() {
+    private void initFirebaseRemoteConfig() {
         FirebaseRemoteConfigSettings settings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
         final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
         remoteConfig.setConfigSettings(settings);
+        remoteConfig.setDefaults(R.xml.remote_config_defaults);
         remoteConfig.fetch(settings.isDeveloperModeEnabled() ? 0L : 43200L).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

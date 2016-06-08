@@ -21,7 +21,8 @@
                 android:id="@+id/userAvatar"
                 android:layout_width="@dimen/avatarWidth"
                 android:layout_height="@dimen/avatarHeight"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_account_circle_black_36dp" />
 
             <TextView
                 android:id="@+id/userNameTv"

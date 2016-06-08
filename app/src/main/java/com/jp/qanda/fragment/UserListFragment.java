@@ -123,7 +123,7 @@ public class UserListFragment extends Fragment {
 //
 //            userAvatar.setImageDrawable(builder.build(user.username.substring(0, 1), generator.getRandomColor()));
             userAvatar.setImageResource(R.drawable.ic_account_circle_black_36dp);
-            if (user.photoUrl != null) {
+            if (user.photoUrl != null && !user.photoUrl.isEmpty()) {
                 ImageLoader.getInstance().displayImage(user.photoUrl, userAvatar);
             }
 
