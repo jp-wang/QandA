@@ -3,6 +3,16 @@
     <string name="action_settings">Settings</string>
     <string name="q_a"><![CDATA[Q&A]]></string>
 
+    <!-- Share -->
+    <string name="invitation_title"><![CDATA[Share Q&A]]></string>
+    <string name="invitation_message">This App is so great! I just got the answer of my perplexity! Give it try!</string>
+    <string name="invitation_deep_link_domain">https://qanda.jp.com/%1$s</string>
+    <string name="invitation_custom_image">https://lh3.googleusercontent.com/ZjphTiIue8xgTcxRZISvVP6xBzXYNDxPVRwowDg0TPreu5cuIZf1c6WOnWAl-DR3GxQ=w300-rw</string>
+    <string name="invitation_action_call">Try it!</string>
+    <string name="invitation_failed">Oops! The sharing is failed :(</string>
+    <!--<string name="invitation_successful">Great! Thanks for your sharing!</string>-->
+    <!--<string name="invitation_google_api_init_failed">![CDATA[Oops! We may not handle your friend's invitation at this time. Apologize!]]</string>-->
+
     <!-- splash -->
     <string name="sign_in_failed">Sign in Failed!</string>
     <string name="try_again">Try again</string>

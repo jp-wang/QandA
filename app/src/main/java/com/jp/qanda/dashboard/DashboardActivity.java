@@ -3,12 +3,18 @@ package com.jp.qanda.dashboard;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.google.android.gms.appinvite.AppInvite;
+import com.google.android.gms.appinvite.AppInviteInvitationResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.jp.qanda.BaseActivity;
 import com.jp.qanda.R;
 import com.jp.qanda.fragment.HotQuestionsFragment;
@@ -22,7 +28,7 @@ import butterknife.ButterKnife;
  * @author jpwang
  * @since 6/2/16
  */
-public class DashboardActivity extends BaseActivity {
+public class DashboardActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
@@ -31,6 +37,8 @@ public class DashboardActivity extends BaseActivity {
     ViewPager viewPager;
 
     private FragmentPagerAdapter pagerAdapter;
+
+    private GoogleApiClient googleApiClient;
 
     public static Intent createIntent(Context context) {
         Intent intent = new Intent();
@@ -74,5 +82,25 @@ public class DashboardActivity extends BaseActivity {
 
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(AppInvite.API)
+                .enableAutoManage(this, this)
+                .build();
+
+        handleInvitation();
+    }
+
+    private void handleInvitation() {
+        AppInvite.AppInviteApi.getInvitation(googleApiClient, this, true).setResultCallback(new ResultCallback<AppInviteInvitationResult>() {
+            @Override
+            public void onResult(@NonNull AppInviteInvitationResult appInviteInvitationResult) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 }

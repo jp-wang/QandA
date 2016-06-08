@@ -1,6 +1,5 @@
 package com.jp.qanda.splash;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,10 +27,6 @@ import com.jp.qanda.TableConstants;
 import com.jp.qanda.dashboard.DashboardActivity;
 import com.jp.qanda.util.AudioHandleUtil;
 import com.jp.qanda.vo.User;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,6 +91,7 @@ public class SplashActivity extends BaseActivity {
                     }
                 });
 
+        init();
 
     }
 
@@ -111,23 +107,6 @@ public class SplashActivity extends BaseActivity {
                 remoteConfig.activateFetched();
             }
         });
-
-        initImageLoader(this.getApplicationContext());
-    }
-
-    public static void initImageLoader(Context context) {
-        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
-        config.threadPriority(Thread.NORM_PRIORITY - 2);
-        config.denyCacheImageMultipleSizesInMemory();
-        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
-        config.tasksProcessingOrder(QueueProcessingType.LIFO);
-        if (BuildConfig.DEBUG) {
-            config.writeDebugLogs(); // Remove for release app
-        }
-
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config.build());
     }
 
     private void startAuthUI() {

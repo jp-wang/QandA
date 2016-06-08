@@ -22,9 +22,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".dashboard.DashboardActivity" />
+        <activity
+            android:name=".dashboard.DashboardActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data
+                    android:host="qanda.jp.com"
+                    android:pathPrefix="/welcome"
+                    android:scheme="http" />
+                <data
+                    android:host="qanda.jp.com"
+                    android:pathPrefix="/welcome"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity android:name=".follow.UserDetailActivity" />
-        <activity android:name=".question.QuestionAnswerDetailActivity" />
+        <activity
+            android:name=".question.QuestionAnswerDetailActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data
+                    android:host="qanda.jp.com"
+                    android:pathPrefix="/question"
+                    android:scheme="http" />
+                <data
+                    android:host="qanda.jp.com"
+                    android:pathPrefix="/question"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity android:name=".fragment.QuestionListFragment$FragmentStubActivity" />
     </application>
 

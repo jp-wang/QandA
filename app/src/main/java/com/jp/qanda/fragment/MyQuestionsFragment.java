@@ -13,6 +13,7 @@ public class MyQuestionsFragment extends QuestionListFragment {
     @Override
     protected Query getQuery(DatabaseReference databaseReference) {
         final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        return databaseReference.child(TableConstants.TABLE_USER_QUESTIONS).child(currentUserId);
+        return databaseReference.child(TableConstants.TABLE_USER_QUESTIONS)
+                .child(currentUserId).orderByChild("timestamp");
     }
 }

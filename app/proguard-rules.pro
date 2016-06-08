@@ -15,3 +15,18 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keepattributes Signature
+-keepattributes *Annotation*
+
+-keepclassmembers class com.jp.qanda.vo.** {
+  *;
+}
+
+-keep class com.google.firebase.quickstart.database.viewholder.** {
+    *;
+}
+
+-keepclassmembers class com.google.firebase.quickstart.database.models.** {
+    *;
+}
+-dontwarn rx.**

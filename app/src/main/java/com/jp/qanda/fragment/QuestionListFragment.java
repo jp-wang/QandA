@@ -74,6 +74,8 @@ public abstract class QuestionListFragment extends Fragment {
                 viewHolder.bindData(model);
             }
         };
+        manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
         questionList.setLayoutManager(manager);
         questionList.setAdapter(adapter);
     }

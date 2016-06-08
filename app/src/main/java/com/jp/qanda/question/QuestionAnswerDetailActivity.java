@@ -11,11 +11,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.appinvite.AppInviteReferral;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +26,7 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.jp.qanda.BaseActivity;
 import com.jp.qanda.ConfigConstants;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
@@ -55,7 +56,7 @@ import permissions.dispatcher.RuntimePermissions;
  * @since 6/2/16
  */
 @RuntimePermissions
-public class QuestionAnswerDetailActivity extends AppCompatActivity implements RecorderView.RecorderViewListener, PlayerView.PlayerViewListener {
+public class QuestionAnswerDetailActivity extends BaseActivity implements RecorderView.RecorderViewListener, PlayerView.PlayerViewListener {
     private final static String Q_KEY = "q_key";
 
     public static Intent createIntent(Context context, String questionKey) {
@@ -113,6 +114,9 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
     @BindView(R.id.title)
     TextView titleTv;
 
+    @BindView(R.id.share)
+    View share;
+
     @BindView(R.id.answerContent)
     TextView answerContent;
 
@@ -131,9 +135,11 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
         titleTv.setText(R.string.question_title);
         answerContent.setText(getString(R.string.question_answer_one_dollar_listen,
                 FirebaseRemoteConfig.getInstance().getDouble(ConfigConstants.CONFIG_SECRET_LISTEN_FEE)));
+        share.setVisibility(View.VISIBLE);
 
         database = FirebaseDatabase.getInstance().getReference();
     }
+
 
     @Override
     protected void onStop() {
@@ -153,6 +159,7 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
     @Override
     protected void onStart() {
         super.onStart();
+        handleReferral();
         database.child(TableConstants.TABLE_QUESTIONS)
                 .child(getIntent().getStringExtra(Q_KEY))
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -167,6 +174,19 @@ public class QuestionAnswerDetailActivity extends AppCompatActivity implements R
 
                     }
                 });
+    }
+
+//    @Override
+//    protected String getShareLinkPath() {
+//        return "question?" + Q_KEY + "=" + getIntent().getStringExtra(Q_KEY);
+//    }
+
+    private void handleReferral() {
+        Intent intent = getIntent();
+        if (AppInviteReferral.hasReferral(intent)) {
+            Uri data = Uri.parse(AppInviteReferral.getDeepLink(intent));
+            intent.putExtra(Q_KEY, data.getQueryParameter(Q_KEY));
+        }
     }
 
     private void updateBasicUI(Question question) {

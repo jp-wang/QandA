@@ -11,6 +11,8 @@ import com.jp.qanda.TableConstants;
 public class HotQuestionsFragment extends QuestionListFragment {
     @Override
     protected Query getQuery(DatabaseReference databaseReference) {
-        return databaseReference.child(TableConstants.TABLE_QUESTIONS).orderByChild("answer/secretListeners").limitToFirst(50);
+        return databaseReference.child(TableConstants.TABLE_QUESTIONS)
+                .orderByChild("timestamp");
+
     }
 }
