@@ -2,6 +2,7 @@ package com.jp.qanda.dashboard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,8 +22,12 @@ import com.jp.qanda.fragment.HotQuestionsFragment;
 import com.jp.qanda.fragment.MeProfileFragment;
 import com.jp.qanda.fragment.UserListFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author jpwang
@@ -102,5 +107,14 @@ public class DashboardActivity extends BaseActivity implements GoogleApiClient.O
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+
+    @OnClick(R.id.fab)
+    void feedback() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"neiyo.wang@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback on " + SimpleDateFormat.getInstance().format(new Date()));
+        startActivity(intent);
     }
 }
