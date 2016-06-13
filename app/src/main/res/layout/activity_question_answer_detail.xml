@@ -34,6 +34,7 @@
                 style="@style/TextAppearanceNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/user_avatar_name_margin"
                 android:layout_marginStart="@dimen/user_avatar_name_margin"
                 android:layout_weight="1" />
 
@@ -71,6 +72,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="@dimen/user_avatar_name_margin"
+                android:layout_marginStart="@dimen/user_avatar_name_margin"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -79,6 +82,8 @@
                     android:layout_width="179dp"
                     android:layout_height="42dp"
                     android:background="@drawable/answer_audio_bubble"
+                    android:drawableLeft="@drawable/ic_hearing"
+                    android:padding="10dp"
                     android:gravity="center"
                     android:text="@string/question_answer_one_dollar_listen"
                     android:textColor="@android:color/white" />
@@ -87,7 +92,9 @@
                     android:id="@+id/answerContentLength"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp" />
 
                 <TextView
                     android:id="@+id/answerContentLengthUnit"
@@ -100,7 +107,8 @@
                     android:id="@+id/answerPlayerView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginStart="3dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp" />
             </LinearLayout>
 
             <ImageView
@@ -121,6 +129,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/avatarWidth"
             android:layout_marginStart="@dimen/avatarWidth"
             android:orientation="horizontal">
 
@@ -161,6 +170,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/user_avatar_name_margin"
             android:layout_marginStart="@dimen/user_avatar_name_margin"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -181,6 +191,7 @@
                     style="@style/TextAppearanceMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp" />
             </LinearLayout>
 

@@ -176,10 +176,10 @@ public class QuestionAnswerDetailActivity extends BaseActivity implements Record
                 });
     }
 
-//    @Override
-//    protected String getShareLinkPath() {
-//        return "question?" + Q_KEY + "=" + getIntent().getStringExtra(Q_KEY);
-//    }
+    @Override
+    protected String getShareLinkPath() {
+        return "question?" + Q_KEY + "=" + getIntent().getStringExtra(Q_KEY);
+    }
 
     private void handleReferral() {
         Intent intent = getIntent();
@@ -221,9 +221,23 @@ public class QuestionAnswerDetailActivity extends BaseActivity implements Record
         questFeeTv.setText(getString(R.string.user_quest_fee, question.questFee));
         questionTv.setText(question.content);
         questionTimeTv.setText(QuestionUtil.getDisplayTime(System.currentTimeMillis() - question.timestamp));
+        if (question.from.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                || question.to.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            answerContent.setText("");
+        } else if (isFree(question.questFee)) {
+            answerContent.setBackgroundResource(R.drawable.splash_icon_background);
+            answerContent.setText(R.string.question_free_listen);
+        } else {
+            answerContent.setText(getString(R.string.question_answer_one_dollar_listen,
+                    FirebaseRemoteConfig.getInstance().getDouble(ConfigConstants.CONFIG_SECRET_LISTEN_FEE)));
+        }
 
         answerListenersTv.setVisibility(View.GONE);
         answerContainer.setVisibility(View.GONE);
+    }
+
+    private boolean isFree(double v) {
+        return v < 0.000001 && v > -0.000001;
     }
 
     private void updateQuestionUserInfo(Question question) {
