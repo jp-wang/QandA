@@ -1,5 +1,6 @@
 package com.jp.qanda.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,12 +26,18 @@ import com.jp.qanda.BuildConfig;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.dashboard.DashboardActivity;
+import com.jp.qanda.util.AudioHandleUtil;
 import com.jp.qanda.vo.User;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -50,6 +57,12 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        ButterKnife.bind(this);
+
+        if (!ImageLoader.getInstance().isInited()) {
+            init();
+        }
 
         Observable.just(FirebaseAuth.getInstance().getCurrentUser())
                 .observeOn(Schedulers.computation())
@@ -86,8 +99,33 @@ public class SplashActivity extends BaseActivity {
                         }
                     }
                 });
+    }
 
+    private void init() {
+        initImageLoader(this.getApplicationContext());
+        AudioHandleUtil.init(20, this.getApplicationContext());
+
+        //Firebase related initialization
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         initFirebaseRemoteConfig();
+    }
+
+    private void initImageLoader(Context context) {
+        if (ImageLoader.getInstance().isInited()) {
+            return;
+        }
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        if (BuildConfig.DEBUG) {
+            config.writeDebugLogs(); // Remove for release app
+        }
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
     }
 
     private void initFirebaseRemoteConfig() {
@@ -115,6 +153,7 @@ public class SplashActivity extends BaseActivity {
             selectedProviders.add(AuthUI.FACEBOOK_PROVIDER);
         }
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                .setLogo(R.mipmap.app_icon)
                 .setProviders(selectedProviders.toArray(new String[selectedProviders.size()]))
                 .build(), RC_SIGN_IN);
     }
