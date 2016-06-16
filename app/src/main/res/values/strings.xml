@@ -13,9 +13,12 @@
     <!--<string name="invitation_successful">Great! Thanks for your sharing!</string>-->
     <!--<string name="invitation_google_api_init_failed">![CDATA[Oops! We may not handle your friend's invitation at this time. Apologize!]]</string>-->
 
+
     <!-- splash -->
     <string name="sign_in_failed">Sign in Failed!</string>
     <string name="try_again">Try again</string>
+    <string name="offline_message">Oops! You are running offline!</string>
+    <string name="offline_message_dismiss"><u>Dismiss</u></string>
     
     <!-- user list -->
     <string name="follow">Follow</string>
