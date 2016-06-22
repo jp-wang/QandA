@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jp.editabletextview.EditableTextView;
 import com.jp.qanda.R;
 import com.jp.qanda.TableConstants;
 import com.jp.qanda.splash.SplashActivity;
@@ -30,21 +31,24 @@ import butterknife.OnClick;
  * @author jpwang
  * @since 6/2/16
  */
-public class MeProfileFragment extends Fragment {
+public class MeProfileFragment extends Fragment implements EditableTextView.EditableTextViewListener {
     @BindView(R.id.userAvatar)
     ImageView userAvatar;
 
     @BindView(R.id.userNameTv)
-    TextView userNameTv;
+    EditableTextView userNameTv;
 
     @BindView(R.id.userTitleTv)
-    TextView userTitleTv;
+    EditableTextView userTitleTv;
+
+    @BindView(R.id.userSummaryTv)
+    EditableTextView userSummaryTv;
 
     @BindView(R.id.userFollowerTv)
     TextView userFollowersTv;
 
     @BindView(R.id.questFeeTv)
-    TextView questFeeTv;
+    EditableTextView questFeeTv;
 
     @BindView(R.id.userTotalRevenueTv)
     TextView totalRevenueTv;
@@ -55,12 +59,16 @@ public class MeProfileFragment extends Fragment {
 
     private ValueEventListener meInfoListener;
 
+    private User me;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_me_profile, container, false);
         ButterKnife.bind(this, rootView);
+
+        bindEditableTextViewListener();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -69,13 +77,22 @@ public class MeProfileFragment extends Fragment {
         return rootView;
     }
 
+    private void bindEditableTextViewListener() {
+        userNameTv.setEditTextViewListener(this);
+        userTitleTv.setEditTextViewListener(this);
+        userSummaryTv.setEditTextViewListener(this);
+        questFeeTv.setEditTextViewListener(this);
+    }
+
     private void updateBasicUI(User user) {
+        me = user;
         if (user.photoUrl != null && !user.photoUrl.isEmpty()) {
             ImageLoader.getInstance().displayImage(user.photoUrl, userAvatar);
         }
         userNameTv.setText(user.username);
         userTitleTv.setText(user.title);
-        questFeeTv.setText(getString(R.string.my_quest_fee_desc, user.questFee));
+        userSummaryTv.setText(user.desc);
+        questFeeTv.setText(getString(R.string.my_quest_fee, user.questFee));
         userFollowersTv.setText(getString(R.string.user_followers_count, user.followers));
         totalRevenueTv.setText(getString(R.string.my_total_revenue, user.totalRevenue));
     }
@@ -128,5 +145,56 @@ public class MeProfileFragment extends Fragment {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this.getContext(), SplashActivity.class));
         this.getActivity().finish();
+    }
+
+    @Override
+    public void onEditModeStart(View v) {
+    }
+
+    @Override
+    public void onEditModeFinish(View v, String text) {
+        switch (v.getId()) {
+            case R.id.userNameTv:
+                if (text.trim().isEmpty()) {
+                    userNameTv.setText(me.username);
+                } else if (!text.trim().equals(me.username)) {
+                    me.username = text.trim();
+                    meReference.setValue(me);
+                }
+                break;
+            case R.id.userTitleTv:
+                if (text.trim().isEmpty()) {
+                    userTitleTv.setText(me.title);
+                } else if (!text.trim().equals(me.title)) {
+                    me.title = text.trim();
+                    meReference.setValue(me);
+                }
+                break;
+            case R.id.userSummaryTv:
+                if (text.trim().isEmpty()) {
+                    userSummaryTv.setText(me.desc);
+                } else if (!text.trim().equals(me.desc)) {
+                    me.desc = text.trim();
+                    meReference.setValue(me);
+                }
+                break;
+            case R.id.questFeeTv:
+                if (text.trim().isEmpty()) {
+                    questFeeTv.setText(getString(R.string.my_quest_fee, me.questFee));
+                } else {
+                    try {
+                        float newFee = Float.valueOf(text.trim());
+                        if (newFee != me.questFee) {
+                            me.questFee = newFee;
+                            meReference.setValue(me);
+                        }
+                    } catch (NumberFormatException e) {
+
+                    } finally {
+                        questFeeTv.setText(getString(R.string.my_quest_fee, me.questFee));
+                    }
+                }
+                break;
+        }
     }
 }

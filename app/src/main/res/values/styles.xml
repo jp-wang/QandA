@@ -20,11 +20,11 @@
 
     <style name="TextAppearanceNormal" parent="android:TextAppearance.Holo">
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/textSizePrimary</item>
     </style>
 
     <style name="TextAppearanceMedium" parent="TextAppearanceNormal">
         <item name="android:textColor">@color/textColorSecondary</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">@dimen/textSizeSecondary</item>
     </style>
 </resources>

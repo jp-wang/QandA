@@ -73,7 +73,7 @@ public class DashboardActivity extends BaseActivity implements GoogleApiClient.O
         eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (offlineContainer.getTag() == null) {
+                if (offlineContainer.getTag() == null && dataSnapshot.getValue() != null) {
                     offlineContainer.setVisibility(dataSnapshot.getValue(Boolean.class) ? View.GONE : View.VISIBLE);
                 }
             }

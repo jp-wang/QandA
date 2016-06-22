@@ -71,6 +71,14 @@ dependencies {
 
     compile 'com.jp.ui:RecorderAndPlayerWidget:1.0.5'
 
+//    compile 'com.jp.ui:EditableTextView:1.0.1'
 }
 
+repositories {
+    maven { url "https://dl.bintray.com/neiyo1987/maven" }
+}
+
+dependencies {
+    compile 'com.jp.ui:EditableTextView:1.0.6'
+}
 apply plugin: 'com.google.gms.google-services'

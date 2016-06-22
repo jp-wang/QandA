@@ -4,6 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="textSizePrimary">16sp</dimen>
+    <dimen name="textSizeSecondary">13sp</dimen>
+
     <!-- User avatar -->
     <dimen name="avatarWidth">50dp</dimen>
     <dimen name="avatarHeight">50dp</dimen>
@@ -11,4 +14,7 @@
 
     <!-- title bar -->
     <dimen name="titleBarPadding">15dp</dimen>
+
+    <!-- profile -->
+    <dimen name="mePanelPadding">30dp</dimen>
 </resources>
